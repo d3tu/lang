@@ -1,5 +1,5 @@
 function parse(code = '', final = [], i = 0, d = '') {
-  for (i = -1; i < code.length ; i++) {
+  for (i = -1; i < code.length; i++) {
     switch (code[0]) {
       case '"':
       case "'":
@@ -13,7 +13,8 @@ function parse(code = '', final = [], i = 0, d = '') {
         else if (/[a-zA-Z]/.test(code[0])) (d = parse.val(code)) && final.push({ type: 'val', data: d })
         else (d = parse.sym(code)) ? final.push({ type: 'sym', data: d }) : final.push({ type: 'etc', data: d = parse.etc(code) })
     }
-    code = code.slice(d.length) && (i = -1)
+    code = code.slice(d.length)
+    i = -1
   }
   return final
 }
@@ -30,8 +31,8 @@ parse.msg = function(code = '', match) {
   return (match = /#.*/.exec(code)) ? match[0] : ''
 } 
 parse.sym = function(code = '', s = '') {
-  for (s of ['++', '--', '::', '>=', '<=', '==', '!=', ':+', ':-', ':/', ':*', ':%', '|', '&', '+', '-', '*', '/', '%', '<', '>', '!', ':', '[', ']', '(', ')', '{', '}']) if (code.startsWith(s)) break
-  return s
+  for (s of ['++', '--', '::', '>=', '<=', '==', '!=', ':+', ':-', ':/', ':*', ':%', '|', '&', '+', '-', '*', '/', '%', '<', '>', '!', ':', '[', ']', '(', ')', '{', '}']) if (code.startsWith(s)) return s
+  return ''
 }
 parse.etc = function(code = '', final = '', c) {
   for (c of code) if (c != code[0]) break
